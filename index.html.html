@@ -1,0 +1,440 @@
+<!--
+Project: MP Forest Jungle Safari — Multi-page website + Booking backend
+Files included below (copy each file into your project):
+
+/ (root)
+  index.html          -> Home page
+  about.html          -> About page
+  safari.html         -> Safari & Booking page (booking form)
+  contact.html        -> Contact page
+  /assets/styles.css  -> Shared styles
+  /assets/scripts.js  -> Shared JS (routing, Firebase optional)
+  /php/booking.php    -> Simple PHP backend to handle bookings (saves to CSV)
+  /php/booking_db.php -> Example using MySQL (optional)
+  README.txt          -> Deployment & Firebase setup notes
+
+Notes:
+- This is a static multi-page site with progressive enhancements.
+- Two backend options provided: PHP (server-hosted) and Firebase (client-side JS).
+- For live bookings choose either: host PHP on a LAMP server or configure Firebase Realtime Database / Firestore and use the included JS.
+-->
+
+<!-- FILE: index.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MP Forest Jungle Safari — Home</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand"><a href="index.html">MP Forest Jungle Safari</a></div>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="safari.html">Safari & Booking</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="hero">
+    <div class="hero-inner">
+      <h1>Explore the wild heart of Madhya Pradesh</h1>
+      <p>Unforgettable jungle safaris — tigers, leopards, birds & more. Safe, guided tours with experienced naturalists.</p>
+      <a class="btn" href="safari.html">Book a Safari</a>
+    </div>
+  </main>
+
+  <section class="section" id="highlights">
+    <h2>Popular Destinations</h2>
+    <div class="cards">
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1559599238-7a264ac2a3c8" alt="Kanha">
+        <h3>Kanha National Park</h3>
+        <p>Deep forests & tiger sightings.</p>
+      </article>
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1508672019048-805c876b67e2" alt="Bandhavgarh">
+        <h3>Bandhavgarh National Park</h3>
+        <p>High tiger density and scenic plateaus.</p>
+      </article>
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1508710395883-b06f43ad33de" alt="Pench">
+        <h3>Pench National Park</h3>
+        <p>The Jungle Book inspiration.</p>
+      </article>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p>© 2025 MP Forest Jungle Safari</p>
+  </footer>
+
+  <script src="assets/scripts.js"></script>
+</body>
+</html>
+
+<!-- FILE: about.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>About — MP Forest Jungle Safari</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand"><a href="index.html">MP Forest Jungle Safari</a></div>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="safari.html">Safari & Booking</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="section">
+    <h1>About Us</h1>
+    <p>MP Forest Jungle Safari is a locally-run eco-friendly safari operator. Our guides are trained naturalists who prioritise wildlife safety and conservation. We offer tailored safaris — family-friendly drives, photography-focused tours, and overnight wilderness experiences.</p>
+
+    <h2>Why choose us</h2>
+    <ul>
+      <li>Experienced certified guides</li>
+      <li>Comfortable vehicles and safety equipment</li>
+      <li>Responsible tourism & local community support</li>
+    </ul>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2025 MP Forest Jungle Safari</p>
+  </footer>
+
+  <script src="assets/scripts.js"></script>
+</body>
+</html>
+
+<!-- FILE: safari.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Safari & Booking — MP Forest Jungle Safari</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand"><a href="index.html">MP Forest Jungle Safari</a></div>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="safari.html">Safari & Booking</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="section">
+    <h1>Book Your Safari</h1>
+    <p>Choose a park, date, and package — we'll handle the rest.</p>
+
+    <form id="bookingForm" class="booking-form" method="post" action="php/booking.php">
+      <label>Full name
+        <input name="name" required>
+      </label>
+
+      <label>Email
+        <input name="email" type="email" required>
+      </label>
+
+      <label>Phone
+        <input name="phone" required>
+      </label>
+
+      <label>Park
+        <select name="park" required>
+          <option value="Kanha">Kanha</option>
+          <option value="Bandhavgarh">Bandhavgarh</option>
+          <option value="Pench">Pench</option>
+        </select>
+      </label>
+
+      <label>Number of guests
+        <input name="guests" type="number" min="1" value="2" required>
+      </label>
+
+      <label>Date
+        <input name="date" type="date" required>
+      </label>
+
+      <label>Package
+        <select name="package">
+          <option value="standard">Standard Safari</option>
+          <option value="photography">Photography Package</option>
+          <option value="overnight">Overnight Package</option>
+        </select>
+      </label>
+
+      <label>Notes
+        <textarea name="notes" rows="3"></textarea>
+      </label>
+
+      <div class="form-actions">
+        <button type="submit" class="btn">Submit Booking (PHP)</button>
+        <button type="button" id="firebaseSubmit" class="btn alt">Submit with Firebase</button>
+      </div>
+
+      <div id="formMessage" aria-live="polite"></div>
+    </form>
+
+    <hr>
+    <h2>Recent Bookings (demo)</h2>
+    <div id="recentBookings">No bookings yet (demo).</div>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2025 MP Forest Jungle Safari</p>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+  <script src="assets/scripts.js"></script>
+
+  <!--
+  Firebase usage notes:
+  - Replace firebaseConfig in assets/scripts.js with your project's values.
+  - When user clicks "Submit with Firebase", booking will be stored in Realtime Database under '/bookings'
+  - Make sure your Realtime Database rules allow writes (or use authentication). For production secure the DB.
+  -->
+</body>
+</html>
+
+<!-- FILE: contact.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Contact — MP Forest Jungle Safari</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand"><a href="index.html">MP Forest Jungle Safari</a></div>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="safari.html">Safari & Booking</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="section">
+    <h1>Contact Us</h1>
+    <p>For group bookings, media inquiries or custom itineraries contact us.</p>
+
+    <ul>
+      <li>Email: <a href="mailto:info@mpforestjunglesafari.example">info@mpforestjunglesafari.example</a></li>
+      <li>Phone: +91-XXXXXXXXXX</li>
+      <li>Office: Near Forest Gate, [City], Madhya Pradesh</li>
+    </ul>
+
+    <h2>Send a message</h2>
+    <form action="" onsubmit="alert('Demo: implement server handler or use mailto/third-party form'); return false;">
+      <label>Name <input required></label>
+      <label>Email <input required type="email"></label>
+      <label>Message <textarea rows="4" required></textarea></label>
+      <button class="btn" type="submit">Send</button>
+    </form>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2025 MP Forest Jungle Safari</p>
+  </footer>
+  <script src="assets/scripts.js"></script>
+</body>
+</html>
+
+<!-- FILE: assets/styles.css -->
+/* Basic, clean styles — customize to match branding */
+:root{--green:#1b5e20;--muted:#666}
+*{box-sizing:border-box}
+body{font-family:Inter, system-ui, Arial, sans-serif;margin:0;color:#222;background:#f7f7f6}
+.site-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:linear-gradient(90deg,var(--green),#2e7d32);color:#fff}
+.site-header .brand a{color:#fff;text-decoration:none;font-weight:700}
+.main-nav a{color:#fff;margin-left:14px;text-decoration:none}
+.hero{background:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee') center/cover no-repeat;height:60vh;display:flex;align-items:center}
+.hero-inner{padding:30px;color:#fff;margin-left:40px;text-shadow:1px 1px 6px rgba(0,0,0,.6)}
+.hero h1{font-size:2.2rem;margin:0 0 8px}
+.section{padding:40px;max-width:1100px;margin:20px auto;background:transparent}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.card{background:#fff;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.06);overflow:hidden}
+.card img{width:100%;height:160px;object-fit:cover}
+.card h3{margin:10px 16px}
+.btn{display:inline-block;background:var(--green);color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;border:none;cursor:pointer}
+.btn.alt{background:#2e7d32}
+.booking-form{max-width:700px;margin-top:16px}
+.booking-form label{display:block;margin-bottom:10px}
+.booking-form input, .booking-form select, .booking-form textarea{width:100%;padding:10px;border-radius:6px;border:1px solid #ddd}
+.form-actions{display:flex;gap:10px;margin-top:12px}
+.site-footer{padding:18px;text-align:center;background:#0b3b12;color:#fff;margin-top:30px}
+
+/* Responsive */
+@media(max-width:700px){.hero{height:40vh}.hero-inner{margin:12px}.main-nav{display:none}}
+
+/* small helper */
+#formMessage{margin-top:12px;color:var(--muted)}
+
+<!-- FILE: assets/scripts.js -->
+// Shared JS: form handling + optional Firebase integration
+
+// ---------- PHP form: HTML form posts to php/booking.php (server-side handling)
+// ---------- Firebase: client sends booking to Realtime DB
+
+(function(){
+  const firebaseSubmit = document.getElementById('firebaseSubmit');
+  const bookingForm = document.getElementById('bookingForm');
+  const formMessage = document.getElementById('formMessage');
+  const recentBookings = document.getElementById('recentBookings');
+
+  // --- Firebase config: REPLACE with your project settings ---
+  const firebaseConfig = {
+    apiKey: "REPLACE_API_KEY",
+    authDomain: "REPLACE_PROJECT.firebaseapp.com",
+    databaseURL: "https://REPLACE_PROJECT.firebaseio.com",
+    projectId: "REPLACE_PROJECT",
+    storageBucket: "REPLACE_PROJECT.appspot.com",
+    messagingSenderId: "REPLACE_SENDER_ID",
+    appId: "REPLACE_APP_ID"
+  };
+
+  // Initialize Firebase only if library is loaded and config replaced
+  let firebaseAvailable = false;
+  if (typeof firebase !== 'undefined' && firebaseConfig.apiKey !== "REPLACE_API_KEY"){
+    try{firebase.initializeApp(firebaseConfig); firebaseAvailable=true;}catch(e){console.warn('Firebase init error',e)}
+  }
+
+  if(firebaseSubmit){
+    firebaseSubmit.addEventListener('click', function(){
+      if(!bookingForm) return;
+      const data = Object.fromEntries(new FormData(bookingForm).entries());
+      if(!firebaseAvailable){
+        formMessage.textContent = 'Firebase not configured — please set firebaseConfig in assets/scripts.js';
+        return;
+      }
+      formMessage.textContent = 'Sending to Firebase...';
+      const db = firebase.database();
+      const ref = db.ref('bookings').push();
+      ref.set(Object.assign({createdAt: new Date().toISOString()}, data))
+        .then(()=>{ formMessage.textContent='Booking saved to Firebase!'; bookingForm.reset(); })
+        .catch(err=>{ formMessage.textContent = 'Firebase error: '+err.message; });
+    });
+  }
+
+  // Demo: load recent bookings from Firebase (if configured)
+  function loadRecentBookings(){
+    if(!firebaseAvailable) return;
+    const db = firebase.database();
+    db.ref('bookings').limitToLast(10).on('value', snapshot => {
+      const val = snapshot.val();
+      if(!val) { recentBookings.textContent = 'No bookings yet.'; return; }
+      const list = Object.values(val).reverse().map(b => `<div class="booking-item"><strong>${b.name || '—'}</strong> — ${b.park} on ${b.date} (${b.guests} guests)</div>`).join('');
+      recentBookings.innerHTML = list;
+    });
+  }
+
+  if(firebaseAvailable) loadRecentBookings();
+
+})();
+
+<!-- FILE: php/booking.php -->
+<?php
+// Simple booking handler (demo)
+// Save POST data to bookings.csv and send a basic response (JSON)
+
+if($_SERVER['REQUEST_METHOD'] !== 'POST'){
+    http_response_code(405);
+    echo json_encode(['error'=>'Method not allowed']);
+    exit;
+}
+
+// Basic sanitization
+$name = isset($_POST['name']) ? trim($_POST['name']) : '';
+$email = isset($_POST['email']) ? trim($_POST['email']) : '';
+$phone = isset($_POST['phone']) ? trim($_POST['phone']) : '';
+$park = isset($_POST['park']) ? trim($_POST['park']) : '';
+$guests = isset($_POST['guests']) ? intval($_POST['guests']) : 1;
+$date = isset($_POST['date']) ? trim($_POST['date']) : '';
+$package = isset($_POST['package']) ? trim($_POST['package']) : '';
+$notes = isset($_POST['notes']) ? trim($_POST['notes']) : '';
+
+$line = [date('c'), $name, $email, $phone, $park, $guests, $date, $package, str_replace(["
+","
+"], [' ', ' '], $notes)];
+$csv = fopen(__DIR__.'/bookings.csv', 'a');
+if($csv === false){
+    http_response_code(500);
+    echo json_encode(['error'=>'Could not open storage']);
+    exit;
+}
+
+fputcsv($csv, $line);
+fclose($csv);
+
+header('Content-Type: application/json');
+echo json_encode(['success'=>true,'message'=>'Booking received']);
+?>
+
+<!-- FILE: php/booking_db.php -->
+<?php
+// Example: store booking into MySQL (prepare DB and table beforehand)
+// Create table example:
+// CREATE TABLE bookings (id INT AUTO_INCREMENT PRIMARY KEY, created_at DATETIME, name VARCHAR(255), email VARCHAR(255), phone VARCHAR(50), park VARCHAR(100), guests INT, date DATE, package VARCHAR(100), notes TEXT);
+
+/*
+$host='localhost'; $db='safari'; $user='dbuser'; $pass='dbpass';
+$pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+$stmt = $pdo->prepare('INSERT INTO bookings (created_at,name,email,phone,park,guests,date,package,notes) VALUES (NOW(),?,?,?,?,?,?,?,?)');
+$stmt->execute([$name,$email,$phone,$park,$guests,$date,$package,$notes]);
+*/
+?>
+
+<!-- FILE: README.txt -->
+MP Forest Jungle Safari — Deployment notes
+
+1) Static site: upload the root files to any static host (Netlify, Vercel, GitHub Pages).
+   - For PHP backend you need a PHP-capable host (shared hosting, cPanel, or VPS).
+
+2) Using PHP backend:
+   - Place /php/booking.php on the server (inaccessible directly to web root if you prefer).
+   - Ensure /php/bookings.csv is writable by the webserver (chmod 664 or 666 depending on host).
+   - The form on safari.html posts to php/booking.php. After successful response consider redirecting to a thank-you page.
+
+3) Using Firebase instead of PHP:
+   - Create a Firebase project (console.firebase.google.com).
+   - Enable Realtime Database and set rules for testing:
+     {
+       "rules": {
+         ".read": true,
+         ".write": true
+       }
+     }
+     (For production secure the rules and use authentication.)
+   - Copy the firebaseConfig values into assets/scripts.js in firebaseConfig object.
+
+4) Production recommendations:
+   - Validate and sanitize all inputs server-side.
+   - Use reCAPTCHA or rate-limiting to prevent spam.
+   - Use HTTPS and TLS for all network traffic.
+   - For payment or deposits integrate a payment provider (Razorpay, PayU, Stripe) with server-side verification.
+
+5) Next steps I can do for you (choose any):
+   - Convert PHP handler to save into MySQL and add admin panel.
+   - Wire up email notifications to you (PHP mail or transactional provider like SendGrid).
+   - Create a downloadable ZIP of this project.
+   - Improve design, add gallery and testimonials, and mobile UI polish.
+
+End of project files.
