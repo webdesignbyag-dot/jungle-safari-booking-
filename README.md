@@ -1,2 +1,1 @@
-# jungle-safari-booking-
-This project focuses on an online jungle safari booking 
+My resume from complete online jungle safari booking 
